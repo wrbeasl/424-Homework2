@@ -1,0 +1,14 @@
+Tracing a webGet at LinuxVM1 from LinuxVM2  (DataFile3.dat)
+tcpdump at LinuxVM2
+
+LinuxVM1 has 10Mbps limit to outbound
+LinuxVM2 has 40ms 5%/25% latency to outbound
+
+LinuxVM1 has apache started
+
+sysctl -w net.ipv4.tcp_congestion_control=reno
+sysctl -w net.ipv4.tcp_sack=0
+sysctl -w net.ipv4.tcp_window_scaling=0
+
+
+

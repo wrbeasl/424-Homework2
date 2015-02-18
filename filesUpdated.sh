@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #####################################################################
-#					William Beasley									#
+#					 William Beasley								#
 #						wrbeasl										#
 #						CPSC 424									#
 #					Homework 2 Question #2							#
@@ -58,22 +58,24 @@ else
 	for f in $FILES; do
 		Owner=$(ls -ld $f | awk '{printf $3}')
 		if [ ${Array[$Owner]+_} ]; then
-			((Array[$Owner]++))	
+			((Array[$Owner]=Info))	
 		else
 			((Array[$Owner]=1))
 		fi
-	done
+	done 
 
-	for i in "${!Array[@]}"; 
+	for i in "${!Array[@]}";
 	do
-		printf "%s\t\n" "$i"
-		echo "$i"
-		USER_FILES="$(find $Starting_Directory -type f -user "$i" -mtime $TargetTime)"
-		for f in $USER_FILES;
-		do
-			ls -lt $f
+		printf "%s\n" "$i"
+		for f in $FILES; do
+			temp=$(ls -ld $f | awk '{printf $3}')
+			if [ "$i" = "$temp" ]; then 	
+				ls -lt $f
+			else
+				continue;
+			fi
 		done
+	done 
 
-	done | sort -rn -k3
 fi
 

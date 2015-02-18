@@ -1,0 +1,6 @@
+#./webGet http://darkhelmet.cs.clemson.edu/File100K.bin 1 1 0
+echo "make sure to issue 'sudo tcpdump -s 1500 -w testcase0.dmp 'port 5020' "
+./webGet http://LinuxVM3:5020/DataFile1.dat 1 1 0 > go.out
+cp go.out TESTCASE0.out
+echo "done....see TESTCASE0.out "
+#./webGet http://darkhelmet.cs.clemson.edu/DataFile4.dat 1 1 0
