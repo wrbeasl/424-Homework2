@@ -1,0 +1,57 @@
+1 arg remaining, starting with 'webGet1.tcpdump'
+Ostermann's tcptrace -- version 6.6.7 -- Thu Nov  4, 2004
+
+38 packets seen, 38 TCP packets traced
+elapsed wallclock time: 0:00:00.004483, 8476 pkts/sec analyzed
+trace file elapsed time: 0:00:00.204807
+TCP connection info:
+1 TCP connection traced:
+TCP connection 1:
+	host a:        LinuxVM2:46593
+	host b:        darkhelmet:80
+	complete conn: yes
+	first packet:  Thu Nov 12 22:55:15.586075 2009
+	last packet:   Thu Nov 12 22:55:15.790882 2009
+	elapsed time:  0:00:00.204807
+	total packets: 38
+	filename:      webGet1.tcpdump
+   a->b:			      b->a:
+     total packets:            19           total packets:            19      
+     ack pkts sent:            18           ack pkts sent:            19      
+     pure acks sent:           15           pure acks sent:            3      
+     sack pkts sent:            0           sack pkts sent:            0      
+     dsack pkts sent:           0           dsack pkts sent:           0      
+     max sack blks/ack:         0           max sack blks/ack:         0      
+     unique bytes sent:        69           unique bytes sent:     21179      
+     actual data pkts:          2           actual data pkts:         15      
+     actual data bytes:        69           actual data bytes:     21179      
+     rexmt data pkts:           0           rexmt data pkts:           0      
+     rexmt data bytes:          0           rexmt data bytes:          0      
+     zwnd probe pkts:           0           zwnd probe pkts:           0      
+     zwnd probe bytes:          0           zwnd probe bytes:          0      
+     outoforder pkts:           0           outoforder pkts:           0      
+     pushed data pkts:          2           pushed data pkts:          4      
+     SYN/FIN pkts sent:       1/1           SYN/FIN pkts sent:       1/1      
+     req 1323 ws/ts:          Y/Y           req 1323 ws/ts:          Y/Y      
+     adv wind scale:            6           adv wind scale:            7      
+     req sack:                  Y           req sack:                  Y      
+     sacks sent:                0           sacks sent:                0      
+     urgent data pkts:          0 pkts      urgent data pkts:          0 pkts 
+     urgent data bytes:         0 bytes     urgent data bytes:         0 bytes
+     mss requested:          1460 bytes     mss requested:          1460 bytes
+     max segm size:            49 bytes     max segm size:          1448 bytes
+     min segm size:            20 bytes     min segm size:           907 bytes
+     avg segm size:            34 bytes     avg segm size:          1411 bytes
+     max win adv:           49280 bytes     max win adv:            5888 bytes
+     min win adv:            5888 bytes     min win adv:            5888 bytes
+     zero win adv:              0 times     zero win adv:              0 times
+     avg win adv:           25173 bytes     avg win adv:            5888 bytes
+     initial window:           49 bytes     initial window:         4344 bytes
+     initial window:            1 pkts      initial window:            3 pkts 
+     ttl stream length:        69 bytes     ttl stream length:     21179 bytes
+     missed data:               0 bytes     missed data:               0 bytes
+     truncated data:            0 bytes     truncated data:          196 bytes
+     truncated packets:         0 pkts      truncated packets:        14 pkts 
+     data xmit time:        0.041 secs      data xmit time:        0.082 secs 
+     idletime max:           41.0 ms        idletime max:           41.0 ms   
+     throughput:              337 Bps       throughput:           103410 Bps  

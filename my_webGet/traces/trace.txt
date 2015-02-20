@@ -1,0 +1,31 @@
+
+./webGet http://darkhelmet/UDPEcho.tar.gz 1 1 0
+Start time: Thu Nov 12 22:54:51 2009
+End time: Thu Nov 12 22:54:52 2009
+Seconds elapsed: 1.247399
+Iterations: 1
+Bytes sent: 69
+Bytes received: 21179
+Average throughput: 103428.192011 Bps
+Average response time: 0.204770 s
+jjm@LinuxVM2 ~/devel/webGet $ ./webGet http://darkhelmet/UDPEcho.tar.gz 1 1 0
+Start time: Thu Nov 12 22:55:15 2009
+End time: Thu Nov 12 22:55:16 2009
+Seconds elapsed: 1.205971
+Iterations: 1
+Bytes sent: 69
+Bytes received: 21179
+Average throughput: 129179.654385 Bps
+Average response time: 0.163950 s
+jjm@LinuxVM2 ~/devel/webGet $ ./webGet http://darkhelmet/UDPEcho.tar.gz 1 1 0
+Start time: Thu Nov 12 22:55:44 2009
+End time: Thu Nov 12 22:55:45 2009
+Seconds elapsed: 1.205537
+Iterations: 1
+Bytes sent: 69
+Bytes received: 21179
+Average throughput: 129000.314279 Bps
+Average response time: 0.164178 s
+
+
+

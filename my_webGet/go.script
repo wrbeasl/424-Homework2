@@ -1,0 +1,12 @@
+#./webGet http://darkhelmet.cs.clemson.edu/File100K.bin 1 1 0
+#./webGet http://LinuxVM3/DataFile99.dat 1 1 0 > go.out
+./webGet http://LinuxVM2/DataFile5.dat 1 1 0 
+#./webGet http://LinuxVM3/DataFile2.dat 1 1 0 >> go.out
+#./webGet http://LinuxVM3/DataFile3.dat 1 1 0 >> go.out
+#./webGet http://LinuxVM3/DataFile4.dat 1 1 0 >> go.out
+#./webGet http://LinuxVM3/DataFile5.dat 1 1 0 >> go.out
+#./webGet http://LinuxVM3/DataFile6.dat 1 1 0 >> go.out
+#./webGet http://darkhelmet.cs.clemson.edu/DataFile1.dat 1 1 0 > go.out
+#./webGet http://darkhelmet.cs.clemson.edu/DataFile2.dat 1 1 2 > go.out
+echo "done....see go.out "
+#./webGet http://darkhelmet.cs.clemson.edu/DataFile4.dat 1 1 0

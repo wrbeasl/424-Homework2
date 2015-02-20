@@ -14,6 +14,9 @@
 #include <stdlib.h>     /* for atoi() and exit() */
 #include <unistd.h>     /* for close() */
 #include <signal.h>
+#include <math.h>
+
+unsigned long MAX_TRANSFER = 4294967296;
 
 void usage();
 void die(char *);
@@ -21,8 +24,7 @@ void die(char *);
 int main(int argc, char **argv){
 	
 	if(argc != 2) usage();
-
-	int sock;
+	int sock, connection;
 	struct sockaddr_in servAddr;
 	struct sockaddr_in clntAddr;
 	unsigned int clntAddrLen;
@@ -49,23 +51,27 @@ int main(int argc, char **argv){
 	printf("webServer was bound on port %d\n", servPort);
 
 	for(;;){
+		char *Buffer = malloc(sizeof(char) * 1024);
 		pid_t child;
-		child = fork();
+		if((connection = accept(sock, NULL, NULL)) < 0)
+			die("Error: failed on calling accept()\n");
 
+		//recv(sock, )
+
+		child = fork();
 		if(child >= 0){
 			if(child == 0){
+				printf("CHILD\n");
+			}
+			else{
 
-				clntAddrLen = sizeof(clntAddr);
-
-
-
-			} else {
 				kill(child, SIGKILL);
 			}
-
-		} else {
-
+		}else {
+			die("Error creating the child process. Exiting.\n");
 		}
+				printf("connected\n");
+
 	}
 
 

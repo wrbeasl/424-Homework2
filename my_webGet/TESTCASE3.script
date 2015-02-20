@@ -1,0 +1,5 @@
+#./webGet http://darkhelmet.cs.clemson.edu/File100K.bin 1 1 0
+nohup ./webGet http://LinuxVM2:5020/DataFile6.dat 1 1 0 >> TESTCASE3.out &
+nohup ./webGet http://LinuxVM2:5020/DataFile5.dat 1 1 0 >> TESTCASE3.out &
+echo "done....see TESTCASE3.out "
+#./webGet http://darkhelmet.cs.clemson.edu/DataFile4.dat 1 1 0

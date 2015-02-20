@@ -1,0 +1,40 @@
+Start time: Mon Nov 14 07:51:09 2011
+End time: Mon Nov 14 07:51:28 2011
+Seconds elapsed: 19.655639
+Iterations: 1
+Bytes sent: 66
+Bytes received: 1000019
+Average throughput: 53753.925325 Bps
+Average response time: 18.603646 s
+Start time: Mon Nov 14 07:51:09 2011
+End time: Mon Nov 14 07:52:46 2011
+Seconds elapsed: 96.926190
+Iterations: 1
+Bytes sent: 66
+Bytes received: 10000019
+Average throughput: 104303.450899 Bps
+Average response time: 95.874287 s
+Start time: Mon Nov 14 07:53:23 2011
+End time: Mon Nov 14 07:53:34 2011
+Seconds elapsed: 10.990372
+Iterations: 1
+Bytes sent: 66
+Bytes received: 1000019
+Average throughput: 100633.587919 Bps
+Average response time: 9.937229 s
+Start time: Mon Nov 14 07:54:26 2011
+End time: Mon Nov 14 07:54:38 2011
+Seconds elapsed: 12.466146
+Iterations: 1
+Bytes sent: 66
+Bytes received: 1000019
+Average throughput: 87614.966981 Bps
+Average response time: 11.413792 s
+Start time: Mon Nov 14 07:54:26 2011
+End time: Mon Nov 14 07:56:04 2011
+Seconds elapsed: 97.960549
+Iterations: 1
+Bytes sent: 66
+Bytes received: 10000019
+Average throughput: 103190.415729 Bps
+Average response time: 96.908409 s

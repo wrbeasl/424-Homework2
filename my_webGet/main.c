@@ -81,6 +81,20 @@ void interrupt(int sig) {
   exit(EXIT_SUCCESS);
 }
 
+int findPort(char *a){
+  char *temp = malloc(sizeof(char) * sizeof(a) + 1);
+  strcpy(temp, a);
+  int i = 0, count = 0;
+  for(i = 0; i < strlen(temp); ++i){
+    if(temp[i] == ':' && count == 1)
+      return i;
+    else if (temp[i] == ':' && count == 0)
+      count++;
+
+  }
+
+}
+
 void stats() {
   /* Because ctime() is intellectually challenged and must have a time_t* arg... */
   time_t tStart = (time_t)startTime, tEnd = (time_t)endTime;

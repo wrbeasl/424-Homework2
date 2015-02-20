@@ -1,0 +1,38 @@
+22:55:15.586075 IP LinuxVM2.46593 > darkhelmet.http: S 27178637:27178637(0) win 5840 <mss 1460,sackOK,timestamp 1871795768 0,nop,wscale 6>
+22:55:15.586087 IP darkhelmet.http > LinuxVM2.46593: S 2390906774:2390906774(0) ack 27178638 win 5792 <mss 1460,sackOK,timestamp 1924455048 1871795768,nop,wscale 7>
+22:55:15.626728 IP LinuxVM2.46593 > darkhelmet.http: . ack 1 win 92 <nop,nop,timestamp 1871795808 1924455048>
+22:55:15.626780 IP LinuxVM2.46593 > darkhelmet.http: P 1:50(49) ack 1 win 92 <nop,nop,timestamp 1871795808 1924455048>
+22:55:15.626847 IP darkhelmet.http > LinuxVM2.46593: . ack 50 win 46 <nop,nop,timestamp 1924455089 1871795808>
+22:55:15.667720 IP LinuxVM2.46593 > darkhelmet.http: P 50:70(20) ack 1 win 92 <nop,nop,timestamp 1871795849 1924455089>
+22:55:15.667776 IP darkhelmet.http > LinuxVM2.46593: . ack 70 win 46 <nop,nop,timestamp 1924455130 1871795849>
+22:55:15.668022 IP darkhelmet.http > LinuxVM2.46593: . 1:1449(1448) ack 70 win 46 <nop,nop,timestamp 1924455130 1871795849>
+22:55:15.668025 IP darkhelmet.http > LinuxVM2.46593: . 1449:2897(1448) ack 70 win 46 <nop,nop,timestamp 1924455130 1871795849>
+22:55:15.668027 IP darkhelmet.http > LinuxVM2.46593: P 2897:4345(1448) ack 70 win 46 <nop,nop,timestamp 1924455130 1871795849>
+22:55:15.708713 IP LinuxVM2.46593 > darkhelmet.http: . ack 1449 win 137 <nop,nop,timestamp 1871795890 1924455130>
+22:55:15.708782 IP LinuxVM2.46593 > darkhelmet.http: . ack 2897 win 182 <nop,nop,timestamp 1871795890 1924455130>
+22:55:15.708843 IP LinuxVM2.46593 > darkhelmet.http: . ack 4345 win 227 <nop,nop,timestamp 1871795890 1924455130>
+22:55:15.708777 IP darkhelmet.http > LinuxVM2.46593: . 4345:5793(1448) ack 70 win 46 <nop,nop,timestamp 1924455171 1871795890>
+22:55:15.708778 IP darkhelmet.http > LinuxVM2.46593: . 5793:7241(1448) ack 70 win 46 <nop,nop,timestamp 1924455171 1871795890>
+22:55:15.708836 IP darkhelmet.http > LinuxVM2.46593: . 7241:8689(1448) ack 70 win 46 <nop,nop,timestamp 1924455171 1871795890>
+22:55:15.708839 IP darkhelmet.http > LinuxVM2.46593: . 8689:10137(1448) ack 70 win 46 <nop,nop,timestamp 1924455171 1871795890>
+22:55:15.708892 IP darkhelmet.http > LinuxVM2.46593: P 10137:11585(1448) ack 70 win 46 <nop,nop,timestamp 1924455171 1871795890>
+22:55:15.708897 IP darkhelmet.http > LinuxVM2.46593: P 11585:13033(1448) ack 70 win 46 <nop,nop,timestamp 1924455171 1871795890>
+22:55:15.749705 IP LinuxVM2.46593 > darkhelmet.http: . ack 5793 win 273 <nop,nop,timestamp 1871795931 1924455171>
+22:55:15.749777 IP LinuxVM2.46593 > darkhelmet.http: . ack 7241 win 318 <nop,nop,timestamp 1871795931 1924455171>
+22:55:15.749835 IP LinuxVM2.46593 > darkhelmet.http: . ack 8689 win 363 <nop,nop,timestamp 1871795931 1924455171>
+22:55:15.749887 IP LinuxVM2.46593 > darkhelmet.http: . ack 10137 win 408 <nop,nop,timestamp 1871795931 1924455171>
+22:55:15.749920 IP LinuxVM2.46593 > darkhelmet.http: . ack 11585 win 454 <nop,nop,timestamp 1871795931 1924455171>
+22:55:15.749962 IP LinuxVM2.46593 > darkhelmet.http: . ack 13033 win 499 <nop,nop,timestamp 1871795931 1924455171>
+22:55:15.749772 IP darkhelmet.http > LinuxVM2.46593: . 13033:14481(1448) ack 70 win 46 <nop,nop,timestamp 1924455212 1871795931>
+22:55:15.749773 IP darkhelmet.http > LinuxVM2.46593: . 14481:15929(1448) ack 70 win 46 <nop,nop,timestamp 1924455212 1871795931>
+22:55:15.749831 IP darkhelmet.http > LinuxVM2.46593: . 15929:17377(1448) ack 70 win 46 <nop,nop,timestamp 1924455212 1871795931>
+22:55:15.749831 IP darkhelmet.http > LinuxVM2.46593: . 17377:18825(1448) ack 70 win 46 <nop,nop,timestamp 1924455212 1871795931>
+22:55:15.749883 IP darkhelmet.http > LinuxVM2.46593: . 18825:20273(1448) ack 70 win 46 <nop,nop,timestamp 1924455212 1871795931>
+22:55:15.749884 IP darkhelmet.http > LinuxVM2.46593: FP 20273:21180(907) ack 70 win 46 <nop,nop,timestamp 1924455212 1871795931>
+22:55:15.790700 IP LinuxVM2.46593 > darkhelmet.http: . ack 14481 win 544 <nop,nop,timestamp 1871795972 1924455212>
+22:55:15.790735 IP LinuxVM2.46593 > darkhelmet.http: . ack 15929 win 589 <nop,nop,timestamp 1871795972 1924455212>
+22:55:15.790758 IP LinuxVM2.46593 > darkhelmet.http: . ack 17377 win 635 <nop,nop,timestamp 1871795972 1924455212>
+22:55:15.790779 IP LinuxVM2.46593 > darkhelmet.http: . ack 18825 win 680 <nop,nop,timestamp 1871795972 1924455212>
+22:55:15.790800 IP LinuxVM2.46593 > darkhelmet.http: . ack 20273 win 725 <nop,nop,timestamp 1871795972 1924455212>
+22:55:15.790822 IP LinuxVM2.46593 > darkhelmet.http: F 70:70(0) ack 21181 win 770 <nop,nop,timestamp 1871795972 1924455212>
+22:55:15.790882 IP darkhelmet.http > LinuxVM2.46593: . ack 71 win 46 <nop,nop,timestamp 1924455253 1871795972>
