@@ -46,7 +46,9 @@ int main(int argc, char **argv){
 	if(bind(sock, (struct sockaddr *) &servAddr, sizeof(servAddr)) < 0)
 		die("Failed to bind server \n");
 
-	if(listen(sock, 1024) < 0)
+	int listenfd;
+
+	if((listenfd = listen(sock, 1024)) < 0)
 		die("Failed to listen for connections\n");
 
 	printf("webServer was bound on port %d\n", servPort);
@@ -54,9 +56,12 @@ int main(int argc, char **argv){
 	for(;;){
 		char Buffer[1024];
 
+		printf("Waiting\n");
 		if((connection = accept(sock, (struct sockaddr *) &clntAddr, &clntAddrLen)) < 0)
 			die("Error: Failed to connect to the client.\n");
 	
+		printf("%d\n", connection);
+
 		pid_t child;
 
 		if((child = fork()) < 0)
@@ -71,7 +76,7 @@ int main(int argc, char **argv){
 			Data = strtok(Buffer, "=");
 			Data = strtok(NULL, " ");
 
-			unsigned char outBuf[atoi(Data)];
+			char outBuf[atoi(Data)];
 			memset(outBuf, 0, atoi(Data));
 			int i;
 			for( i = 0; i < atoi(Data); ++i){
@@ -81,8 +86,9 @@ int main(int argc, char **argv){
 			if(send(connection, outBuf, atoi(Data), 0) < 0)
 				die("Error: Failed to send to the client.\n");
 
+			printf("Sent to client\n");
 			close(connection);
-			return 0;
+			exit(0);
 		} else {
 			int returnstatus;
 			waitpid(child, &returnstatus, 0);
@@ -90,7 +96,9 @@ int main(int argc, char **argv){
 			if(returnstatus == 0){
 				kill(child, SIGKILL);
 			}
+			close(connection);
 		}
+
 	}	
 	close(sock);
 	return 0;
