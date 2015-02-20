@@ -17,9 +17,10 @@
 #include <math.h>
 
 unsigned long MAX_TRANSFER = 4294967296;
-
+unsigned long bytesRecd = 0;
 void usage();
 void die(char *);
+int safe_recv(int sock, char *buffer, int len);
 
 int main(int argc, char **argv){
 	
@@ -50,22 +51,33 @@ int main(int argc, char **argv){
 
 	printf("webServer was bound on port %d\n", servPort);
 
-	char *Buffer = malloc(sizeof(char) * 1024);
 	for(;;){
+		char Buffer[1024];
 
 		if((connection = accept(sock, (struct sockaddr *) &clntAddr, &clntAddrLen)) < 0)
-			die("Error: failed on calling accept()\n");
-		else {
-			printf("Connected to client.. %d\n", clntAddrLen);
+			die("Error: Failed to connect to the client.\n");
+	
+		pid_t child;
+
+		if((child = fork()) < 0)
+			die("Error: Failed to fork()\n");
+		else if(child == 0){
+			close(sock);
+			if(recv(connection, &Buffer, 1024, 0) < 0)
+				die("Error: Failed to recieve from the client.\n");
+			printf("Buffer: %s\n", Buffer);
+
+			return 0;
+		} else {
+			int returnstatus;
+			waitpid(child, &returnstatus, 0);
+
+			if(returnstatus == 0){
+				kill(child, SIGKILL);
+			}
 		}
+	}	
 
-		int byte_count;
-		if((byte_count = recv(sock, &Buffer, sizeof(Buffer), 0)) < 0)
-			printf("Error recieving from client\n");
-	}
-
-
-	close(sock);
 	return 0;
 }
 
@@ -78,4 +90,15 @@ void usage(){
 void die(char *s){
 	perror(s);
 	exit(-1);
+}
+
+int safe_recv(int sock, char *buffer, int len) {
+  int recd;
+  if ((recd = recv(sock, buffer, len, 0)) == -1) {
+    die("recv() had a bad day");
+  }
+  printf("%s\n", buffer);
+  buffer[recd] = '\0';
+  bytesRecd += recd;
+  return recd;
 }

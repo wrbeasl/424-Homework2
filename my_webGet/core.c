@@ -102,11 +102,14 @@ void iteration(const struct sockaddr_in *serverAddr, char *domain, char *path, i
     die("socket() failed"); 
   }
   
+  int connection;
   /* Connect */
-  if (connect(sock, (struct sockaddr *)serverAddr, sizeof(struct sockaddr)) < 0) { die("connect() failed"); }
+  if (( connection = connect(sock, (struct sockaddr *)serverAddr, sizeof(struct sockaddr))) < 0) { die("connect() failed"); }
   
 
-  safe_send(sock, "Test");
+  if(send(sock, "Test", sizeof("Test"), 0) > 0) printf("Success\n");
+  else printf("Fail\n");
+  printf("Test\n");
 
   /* Send request path and non-keep-alive header (lines 1 & 2) */
   sprintf(buffer, "GET /%s HTTP/1.1\r\nConnection: close\r\n", path);
