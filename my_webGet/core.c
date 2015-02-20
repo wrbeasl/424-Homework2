@@ -106,15 +106,9 @@ void iteration(const struct sockaddr_in *serverAddr, char *domain, char *path, i
   /* Connect */
   if (( connection = connect(sock, (struct sockaddr *)serverAddr, sizeof(struct sockaddr))) < 0) { die("connect() failed"); }
   
-
-  if(send(sock, "Test", sizeof("Test"), 0) > 0) printf("Success\n");
-  else printf("Fail\n");
-  printf("Test\n");
-
   /* Send request path and non-keep-alive header (lines 1 & 2) */
   sprintf(buffer, "GET /%s HTTP/1.1\r\nConnection: close\r\n", path);
   safe_send(sock, buffer);
-  printf("Sent %s to the server\n", path);
   if (debugFlag == 2) {
     printf("SEND:\n%s \n", buffer);
   }
@@ -122,7 +116,6 @@ void iteration(const struct sockaddr_in *serverAddr, char *domain, char *path, i
   /* Next, the host header and separator [line 2 & 3] */
   sprintf(buffer, "Host: %s\r\n\r\n", domain);
   safe_send(sock, buffer);
-  printf("Sent %s to the server\n", domain);
   if (debugFlag == 2) {
     printf("SEND:\n%s \n", buffer);
   }
@@ -201,6 +194,7 @@ void iteration(const struct sockaddr_in *serverAddr, char *domain, char *path, i
         printf("Before SECOND safe_recv, buf ptr:%x with to_read:%d, totalRead:%d  \n", buffer, to_read,totalRead);
     }
     r = safe_recv(sock, buffer, to_read);
+
     totalRead += r;
     if (debugFlag > 0) {
         printf("Bytes received from SECOND safe recv %d, totalRead:%d \n", r,totalRead);

@@ -62,11 +62,26 @@ int main(int argc, char **argv){
 		if((child = fork()) < 0)
 			die("Error: Failed to fork()\n");
 		else if(child == 0){
-			close(sock);
 			if(recv(connection, &Buffer, 1024, 0) < 0)
 				die("Error: Failed to recieve from the client.\n");
-			printf("Buffer: %s\n", Buffer);
+			else
+				printf("Recieved from client\n");
+		
+			char *Data;
+			Data = strtok(Buffer, "=");
+			Data = strtok(NULL, " ");
 
+			unsigned char outBuf[atoi(Data)];
+			memset(outBuf, 0, atoi(Data));
+			int i;
+			for( i = 0; i < atoi(Data); ++i){
+				printf("%c", outBuf[i]);
+			}
+
+			if(send(connection, outBuf, atoi(Data), 0) < 0)
+				die("Error: Failed to send to the client.\n");
+
+			close(connection);
 			return 0;
 		} else {
 			int returnstatus;
@@ -77,7 +92,7 @@ int main(int argc, char **argv){
 			}
 		}
 	}	
-
+	close(sock);
 	return 0;
 }
 
