@@ -50,28 +50,18 @@ int main(int argc, char **argv){
 
 	printf("webServer was bound on port %d\n", servPort);
 
+	char *Buffer = malloc(sizeof(char) * 1024);
 	for(;;){
-		char *Buffer = malloc(sizeof(char) * 1024);
-		pid_t child;
-		if((connection = accept(sock, NULL, NULL)) < 0)
+
+		if((connection = accept(sock, (struct sockaddr *) &clntAddr, &clntAddrLen)) < 0)
 			die("Error: failed on calling accept()\n");
-
-		//recv(sock, )
-
-		child = fork();
-		if(child >= 0){
-			if(child == 0){
-				printf("CHILD\n");
-			}
-			else{
-
-				kill(child, SIGKILL);
-			}
-		}else {
-			die("Error creating the child process. Exiting.\n");
+		else {
+			printf("Connected to client.. %d\n", clntAddrLen);
 		}
-				printf("connected\n");
 
+		int byte_count;
+		if((byte_count = recv(sock, &Buffer, sizeof(Buffer), 0)) < 0)
+			printf("Error recieving from client\n");
 	}
 
 
