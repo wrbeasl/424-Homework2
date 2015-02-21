@@ -84,16 +84,18 @@ int main(int argc, char **argv){
 				cur_req_size = atol(req_size);
 
 			if(atoi(req_size) > CHUNKSIZE){
-				char Buffer[CHUNKSIZE];
-				memset(Buffer, 1, CHUNKSIZE);
+				int size = atoi(req_size)/iterations;
+				printf("%d", size);
+				char Buffer[size];
+				memset(Buffer, 1, size);
 				int temp;
 				temp = send(connection, returnHeader, 10, 0);
 				if(temp < 0) die("Failed to send to client\n");
 
-				temp = send(connection, Buffer, CHUNKSIZE, 0);
+				temp = send(connection, Buffer, size, 0);
 				if(temp < 0) die("Failed to send to client\n");
 
-				cur_req_size -= CHUNKSIZE;
+				cur_req_size -= size;
 			} else {
 				char Buffer[atoi(req_size)];
 				memset(Buffer, 1, atoi(req_size));
