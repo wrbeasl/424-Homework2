@@ -1,6 +1,7 @@
 /* CpSc 852 Hw 3 Q 3: Core functionality code */
 #include "common.h"
 #include "globals.h"
+#include <stdlib.h>
 
 /* The "default" content-length if that header is omitted */
 #define ALMOST_INFINITY 0x7FFFFFFFFFFFFFF
@@ -64,6 +65,18 @@ void parse(const char *url, struct sockaddr_in *addr, char **domain_ptr, char **
   /* Free up the work buffer */
   free(workBuffer);
 }
+void sendIterationCount(const struct sockaddr_in *svr, int count){
+  int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+  if(connect(sock, (struct sockaddr *)svr, sizeof(struct sockaddr)) < 0)
+    die("Failed to connect to the server\n");
+
+  char buffer[20];
+  snprintf(buffer, 20, "%d", count);
+  safe_send(sock, buffer);
+
+  close(sock);
+}
+
 
 void iteration(const struct sockaddr_in *serverAddr, char *domain, char *path, int debugFlag) {
   int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -102,9 +115,8 @@ void iteration(const struct sockaddr_in *serverAddr, char *domain, char *path, i
     die("socket() failed"); 
   }
   
-  int connection;
   /* Connect */
-  if (( connection = connect(sock, (struct sockaddr *)serverAddr, sizeof(struct sockaddr))) < 0) { die("connect() failed"); }
+  if (connect(sock, (struct sockaddr *)serverAddr, sizeof(struct sockaddr)) < 0) { die("connect() failed"); }
   
   /* Send request path and non-keep-alive header (lines 1 & 2) */
   sprintf(buffer, "GET /%s HTTP/1.1\r\nConnection: close\r\n", path);
@@ -151,6 +163,7 @@ void iteration(const struct sockaddr_in *serverAddr, char *domain, char *path, i
       printf("Before FIRST safe_recv, buf ptr:%d, buffer_size:%d;  with to_read:%d (offset:%d)  \n", buffer + (buffer_size - 1 - to_read), buffer_size,to_read, (buffer_size - 1 - to_read));
     }
     r = safe_recv(sock, buffer + (buffer_size - 1 - to_read), to_read);
+    printf("%s\n", buffer);
     totalRead += r;
 //    if (r <= 0) 
     if (r < 0) {
@@ -194,7 +207,6 @@ void iteration(const struct sockaddr_in *serverAddr, char *domain, char *path, i
         printf("Before SECOND safe_recv, buf ptr:%x with to_read:%d, totalRead:%d  \n", buffer, to_read,totalRead);
     }
     r = safe_recv(sock, buffer, to_read);
-
     totalRead += r;
     if (debugFlag > 0) {
         printf("Bytes received from SECOND safe recv %d, totalRead:%d \n", r,totalRead);

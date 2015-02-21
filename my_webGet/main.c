@@ -23,8 +23,6 @@ int iterations, currentIter, bytesSent, bytesRecd;
 double avgThroughput = 0.0, avgResponseTime = 0.0;
 char Version[32] = "1.001   "; 
 
-int findPort(char *);
-
 /* PROGRAM */
 /*-------------------------------------------------------*/
 int main(int argc, char** argv) {
@@ -32,7 +30,6 @@ int main(int argc, char** argv) {
   struct sockaddr_in serverAddress;
   char *domain = NULL;
   char *path = NULL;
-  int delim = findPort(argv[1]);
   
   /* Make sure the poor user has a clue. */
   if (argc < 5) { usage(); }
@@ -51,6 +48,7 @@ int main(int argc, char** argv) {
   startTime = timestamp();
   
   /* Main loop */
+  sendIterationCount(&serverAddress, iterations);
   for (currentIter = 0; (iterations <= 0) || (currentIter < iterations);) {
     /* Run the thing */
     iteration(&serverAddress, domain, path, debugFlag);
@@ -82,20 +80,6 @@ void interrupt(int sig) {
   endTime = timestamp();
   stats();
   exit(EXIT_SUCCESS);
-}
-
-int findPort(char *a){
-  char *temp = malloc(sizeof(char) * sizeof(a) + 1);
-  strcpy(temp, a);
-  int i = 0, count = 0;
-  for(i = 0; i < strlen(temp); ++i){
-    if(temp[i] == ':' && count == 1)
-      return i;
-    else if (temp[i] == ':' && count == 0)
-      count++;
-
-  }
-  free(temp);
 }
 
 void stats() {

@@ -26,6 +26,7 @@ void safe_send(int, char *);
 int safe_recv(int, char *, int);
 
 void parse(const char *, struct sockaddr_in *, char **, char **);
+void sendIterationCount(const struct sockaddr_in *, int);
 void iteration(const struct sockaddr_in *, char *, char *, int);
 
 /* Utility macro */

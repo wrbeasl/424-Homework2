@@ -1,7 +1,4 @@
-/*****************************************************************************************
-*				Program: webServer														*
-*				Description: A webGet server examples									*
-****************************************************************************************/
+// webServer.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -16,21 +13,24 @@
 #include <signal.h>
 #include <math.h>
 
-unsigned long MAX_TRANSFER = 4294967296;
-unsigned long bytesRecd = 0;
+#define CHUNKSIZE 10000
+
+int iterations = 0;
+
 void usage();
 void die(char *);
-int safe_recv(int sock, char *buffer, int len);
+void rec_iter_count(int sock, const struct sockaddr_in * clntAddr, int clntLen);
 
 int main(int argc, char **argv){
 	
+	// Variables and arg check
 	if(argc != 2) usage();
-	int sock, connection;
+	int sock;
+	unsigned long cur_req_size;
 	struct sockaddr_in servAddr;
 	struct sockaddr_in clntAddr;
 	unsigned int clntAddrLen;
 	unsigned short servPort;
-
 
 	servPort = atoi(argv[1]);
 
@@ -53,55 +53,74 @@ int main(int argc, char **argv){
 
 	printf("webServer was bound on port %d\n", servPort);
 
+	rec_iter_count(sock, &clntAddr, clntAddrLen);
+
 	for(;;){
-		char Buffer[1024];
+		char DataSize[CHUNKSIZE];
+		char returnHeader[10] = { "\r\n\r\n" };
+		pid_t ChildProc;
+		int connection;
 
-		printf("Waiting\n");
-		if((connection = accept(sock, (struct sockaddr *) &clntAddr, &clntAddrLen)) < 0)
-			die("Error: Failed to connect to the client.\n");
-	
-		printf("%d\n", connection);
-
-		pid_t child;
-
-		if((child = fork()) < 0)
-			die("Error: Failed to fork()\n");
-		else if(child == 0){
-			if(recv(connection, &Buffer, 1024, 0) < 0)
-				die("Error: Failed to recieve from the client.\n");
-			else
-				printf("Recieved from client\n");
-		
-			char *Data;
-			Data = strtok(Buffer, "=");
-			Data = strtok(NULL, " ");
-
-			char outBuf[atoi(Data)];
-			memset(outBuf, 0, atoi(Data));
-			int i;
-			for( i = 0; i < atoi(Data); ++i){
-				printf("%c", outBuf[i]);
-			}
-
-			if(send(connection, outBuf, atoi(Data), 0) < 0)
-				die("Error: Failed to send to the client.\n");
-
-			printf("Sent to client\n");
-			close(connection);
-			exit(0);
-		} else {
-			int returnstatus;
-			waitpid(child, &returnstatus, 0);
-
-			if(returnstatus == 0){
-				kill(child, SIGKILL);
-			}
-			close(connection);
+		if((connection = accept(sock, (struct sockaddr *) &clntAddr, &clntAddrLen)) < 0){
+			die("Error: Failed to accept client connections\n");
 		}
 
-	}	
-	close(sock);
-	return 0;
+		ChildProc = fork();
+
+		if(ChildProc < 0){
+			die("Failed to fork the child process, closing. \n");
+		} else if (ChildProc == 0){
+			printf("Child\n");
+
+			if(recv(connection, DataSize, CHUNKSIZE, 0) < 0)
+				die("Failed to recieve from the client\n");
+
+			printf("%s\n", DataSize);
+			char *req_size;
+			req_size = strtok(DataSize, "=");
+			req_size = strtok(NULL, " ");
+			
+			if(cur_req_size == 0 && atol(req_size) > CHUNKSIZE)
+				cur_req_size = atol(req_size);
+
+			if(atoi(req_size) > CHUNKSIZE){
+				char Buffer[CHUNKSIZE];
+				memset(Buffer, 1, CHUNKSIZE);
+				int temp;
+				temp = send(connection, returnHeader, 10, 0);
+				if(temp < 0) die("Failed to send to client\n");
+
+				temp = send(connection, Buffer, CHUNKSIZE, 0);
+				if(temp < 0) die("Failed to send to client\n");
+
+				cur_req_size -= CHUNKSIZE;
+			} else {
+				char Buffer[atoi(req_size)];
+				memset(Buffer, 1, atoi(req_size));
+
+				int temp;
+				temp = send(connection, returnHeader, 10, 0);
+				if(temp < 0) die("Failed to send to client\n");
+
+				temp = send(connection, Buffer, atoi(req_size), 0);
+				if(temp < 0) die("Failed to send buffer to client\n");
+
+			}
+
+			exit(0);
+		} else {
+			printf("Parent\n");
+			int status;
+			waitpid(ChildProc, &status, 0);
+
+			if(status==0)
+				kill(ChildProc, SIGTERM);
+
+			printf("Killed child\n");
+			close(connection);
+		}
+	}
+
 }
 
 void usage(){
@@ -115,13 +134,18 @@ void die(char *s){
 	exit(-1);
 }
 
-int safe_recv(int sock, char *buffer, int len) {
-  int recd;
-  if ((recd = recv(sock, buffer, len, 0)) == -1) {
-    die("recv() had a bad day");
-  }
-  printf("%s\n", buffer);
-  buffer[recd] = '\0';
-  bytesRecd += recd;
-  return recd;
+void rec_iter_count(int sock, const struct sockaddr_in * clntAddr, int clntLen){
+	int connection;
+	if(( connection = accept(sock, (struct sockaddr *) &clntAddr, &clntLen)) < 0)
+		die("Failed recieving iteration count\n");
+	else
+		printf("accepted\n");
+
+	char Buff[10];
+
+	if(recv(connection, &Buff, 10, 0) < 0)
+		die("Failed to recieve iter count\n");
+
+	iterations = atoi(Buff);
+	printf("%d\n", iterations);
 }
