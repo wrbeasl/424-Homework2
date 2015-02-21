@@ -1,17 +1,21 @@
-PROGS =  createData webGet
+PROGS =  createData webClient webServer
 
 all:    ${PROGS}
 
 createData: createDataFiles.o createDataFiles
 	gcc -ggdb -std=gnu99 -c createDataFiles.c
 
-webGet: main.o utils.o core.o
-	gcc -std=gnu99 -o webGet main.o utils.o core.o
+webClient: main.o utils.o core.o
+	gcc -std=gnu99 -o webClient main.o utils.o core.o
+
+webServer: 
+	gcc -std=gnu99 -o webServer webServer.c
 
 clean:
 	rm -rf *.o
 	rm -rf createDataFiles 
-	rm -rf webGet
+	rm -rf webClient
+	rm -rf webServer
 
 
 backup:
