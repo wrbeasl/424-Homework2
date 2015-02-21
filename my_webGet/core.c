@@ -163,7 +163,6 @@ void iteration(const struct sockaddr_in *serverAddr, char *domain, char *path, i
       printf("Before FIRST safe_recv, buf ptr:%d, buffer_size:%d;  with to_read:%d (offset:%d)  \n", buffer + (buffer_size - 1 - to_read), buffer_size,to_read, (buffer_size - 1 - to_read));
     }
     r = safe_recv(sock, buffer + (buffer_size - 1 - to_read), to_read);
-    printf("%s\n", buffer);
     totalRead += r;
 //    if (r <= 0) 
     if (r < 0) {

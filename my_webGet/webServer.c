@@ -16,6 +16,7 @@
 #define CHUNKSIZE 10000
 
 int iterations = 0;
+int curr_iter = 0;
 
 void usage();
 void die(char *);
@@ -51,11 +52,9 @@ int main(int argc, char **argv){
 	if((listenfd = listen(sock, 1024)) < 0)
 		die("Failed to listen for connections\n");
 
-	printf("webServer was bound on port %d\n", servPort);
-
 	rec_iter_count(sock, &clntAddr, clntAddrLen);
-
-	for(;;){
+	int i = 0;
+	for(i = 0; i < iterations; ++i){
 		char DataSize[CHUNKSIZE];
 		char returnHeader[10] = { "\r\n\r\n" };
 		pid_t ChildProc;
@@ -70,12 +69,9 @@ int main(int argc, char **argv){
 		if(ChildProc < 0){
 			die("Failed to fork the child process, closing. \n");
 		} else if (ChildProc == 0){
-			printf("Child\n");
-
 			if(recv(connection, DataSize, CHUNKSIZE, 0) < 0)
 				die("Failed to recieve from the client\n");
 
-			printf("%s\n", DataSize);
 			char *req_size;
 			req_size = strtok(DataSize, "=");
 			req_size = strtok(NULL, " ");
@@ -85,7 +81,6 @@ int main(int argc, char **argv){
 
 			if(atoi(req_size) > CHUNKSIZE){
 				int size = atoi(req_size)/iterations;
-				printf("%d", size);
 				char Buffer[size];
 				memset(Buffer, 1, size);
 				int temp;
@@ -111,18 +106,18 @@ int main(int argc, char **argv){
 
 			exit(0);
 		} else {
-			printf("Parent\n");
 			int status;
 			waitpid(ChildProc, &status, 0);
 
 			if(status==0)
 				kill(ChildProc, SIGTERM);
 
-			printf("Killed child\n");
 			close(connection);
 		}
+		curr_iter++;
 	}
-
+	close(sock);
+	return 0;
 }
 
 void usage(){
@@ -140,8 +135,6 @@ void rec_iter_count(int sock, const struct sockaddr_in * clntAddr, int clntLen){
 	int connection;
 	if(( connection = accept(sock, (struct sockaddr *) &clntAddr, &clntLen)) < 0)
 		die("Failed recieving iteration count\n");
-	else
-		printf("accepted\n");
 
 	char Buff[10];
 
@@ -149,5 +142,4 @@ void rec_iter_count(int sock, const struct sockaddr_in * clntAddr, int clntLen){
 		die("Failed to recieve iter count\n");
 
 	iterations = atoi(Buff);
-	printf("%d\n", iterations);
 }
